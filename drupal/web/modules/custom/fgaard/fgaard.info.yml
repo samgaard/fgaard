@@ -1,0 +1,13 @@
+name: fgaard
+type: module
+description: 'FrankGaard.com Custom Code'
+core: 8.x
+package: Custom
+dependencies:
+  - field
+  - menu_ui
+  - node
+  - path
+  - text
+  - user
+  - views

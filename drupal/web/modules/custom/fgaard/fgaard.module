@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Contains fgaard.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function fgaard_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the fgaard module.
+    case 'help.page.fgaard':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('FrankGaard.com Custom Code') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function fgaard_theme() {
+  return [
+    'fgaard' => [
+      'render element' => 'children',
+    ],
+  ];
+}
