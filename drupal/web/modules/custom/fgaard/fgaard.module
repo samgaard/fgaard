@@ -65,6 +65,9 @@ function import_from_old_site() {
     // Create file object from local URL.
     $raw = str_replace('&#039;', "'", $photodata->field_photo_fid->raw);
     $local_file = \Drupal::root() . '/' . str_replace('photos', 'photoz', $raw);
+    if(file_exists($local_file . '.crop_display.jpg')) {
+      $local_file .= '.crop_display.jpg';
+    }
     $data = file_get_contents($local_file);
     $new_file_name = str_replace('sites/default/files/photos/', '', str_replace("'", "", $raw));
     $save_to_local_path = 'public://photos/' . $new_file_name;
