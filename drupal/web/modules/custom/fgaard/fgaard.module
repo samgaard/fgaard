@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\node\Entity\Node;
 
 /**
  * Implements hook_help().
@@ -17,6 +18,7 @@ function fgaard_help($route_name, RouteMatchInterface $route_match) {
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('FrankGaard.com Custom Code') . '</p>';
+      
       return $output;
 
     default:
@@ -31,5 +33,110 @@ function fgaard_theme() {
     'fgaard' => [
       'render element' => 'children',
     ],
+    'previewimage' => [
+      'variables' => [
+        'build' => NULL,
+      ],
+    ],
   ];
 }
+
+function import_from_old_site() {
+
+  //GET DATA FROM OLD SITE
+  $client = \Drupal::httpClient();
+  $request = $client->request('GET', 'http://frankgaard.com/data-export', []);
+  $json_data = json_decode($request->getBody()->getContents());
+
+  $count =
+  $skipped = 0;
+  foreach($json_data as $photodata) {
+
+    //CHECK IF A NODE WITH THIS LEGACY ID EXISTS ALREADY
+    $query = \Drupal::entityQuery('node')
+      ->condition('type', 'photo')
+      ->condition('field_legacy_nid', $photodata->nid->raw);
+    $nids = $query->execute();
+    if(count($nids)) {
+      $skipped++;
+      continue;
+    }
+
+    // Create file object from local URL.
+    $raw = str_replace('&#039;', "'", $photodata->field_photo_fid->raw);
+    $local_file = \Drupal::root() . '/' . str_replace('photos', 'photoz', $raw);
+    $data = file_get_contents($local_file);
+    $new_file_name = str_replace('sites/default/files/photos/', '', str_replace("'", "", $raw));
+    $save_to_local_path = 'public://photos/' . $new_file_name;
+
+    $file = file_save_data($data, $save_to_local_path, FILE_EXISTS_REPLACE);
+
+    //GET TERM ID
+    $term_name = $photodata->tid->content;
+    $term = \Drupal::entityTypeManager()
+      ->getStorage('taxonomy_term')
+      ->loadByProperties(['name' => $term_name]);
+    $tid = array_keys($term);
+
+
+    // Create node object with attached file.
+    $node = Node::create([
+      'type' => 'photo',
+      'title' => $photodata->title->raw,
+      'field_legacy_nid' => $photodata->nid->raw,
+      'field_gallery' => [
+        ['target_id' => $tid[0]]
+      ],
+      'field_photo' => [
+        'target_id' => $file->id(),
+        'alt' => $photodata->title->raw,
+      ],
+    ]);
+
+    $node->save();
+
+    echo 'imported ' . $photodata->title->raw . '<br />';
+
+    $count++;
+    if ($count > 300) {
+      break;
+    }
+  }
+  echo 'Imported ' . $count . ' new photos and skipped ' . $skipped . ' photos.';
+}
+
+/*
+function top_five_colors($file) {
+  $image_path = $file->getFileUri();
+
+  $palette = Palette::fromFilename($image_path);
+
+  $mostused = array_keys($palette->getMostUsedColors(999));
+
+  $image = array(
+    '#theme' => 'image',
+    '#uri' => $image_path,
+  );
+  // an extractor is built from a palette
+  $extractor = new ColorExtractor($palette);
+
+  // it defines an extract method which return the most “representative” colors
+  $representative = $extractor->extract(10);
+
+  $colors = array_merge(($mostused), $representative);
+  $output = [];
+
+  // $palette is an iterator on colors sorted by pixel count
+  foreach($colors as $color) {
+    // colors are represented by integers
+    $bgcolor = Color::fromIntToHex($color);
+
+    $color_hex = str_replace('#', '', $bgcolor);
+
+    if (!in_array($color_hex, $output)) {
+      $output[] = $color_hex;
+    }
+  }
+  return $output;
+}
+*/
