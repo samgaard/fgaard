@@ -11,11 +11,14 @@ dependencies:
   - file
   - help
   - image
+  - image_popup
   - menu_ui
   - node
+  - owlcarousel
   - path
   - search
   - system
+  - taxonomy
   - text
   - user
   - views

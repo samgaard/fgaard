@@ -2,27 +2,28 @@ langcode: en
 status: true
 dependencies:
   config:
-    - system.menu.tools
+    - views.view.photos
   module:
     - system
+    - views
   theme:
     - fgaard_subtheme
-id: fgaard_subtheme_tools
+id: views_block__photos_block_1
 theme: fgaard_subtheme
-region: sidebar_first
-weight: -6
+region: content
+weight: 0
 provider: null
-plugin: 'system_menu_block:tools'
+plugin: 'views_block:photos-block_1'
 settings:
-  id: 'system_menu_block:tools'
-  label: Tools
-  provider: system
+  id: 'views_block:photos-block_1'
+  label: ''
+  provider: views
   label_display: visible
-  level: 1
-  depth: 0
+  views_label: ''
+  items_per_page: none
 visibility:
   request_path:
     id: request_path
     pages: '<front>'
-    negate: true
+    negate: false
     context_mapping: {  }
