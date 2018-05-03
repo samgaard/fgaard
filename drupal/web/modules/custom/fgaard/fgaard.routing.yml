@@ -1,0 +1,8 @@
+
+fgaard.testpage_hello:
+  path: '/test'
+  defaults:
+    _controller: '\Drupal\fgaard\Controller\testpage::hello'
+    _title: 'test'
+  requirements:
+    _permission: 'access content'

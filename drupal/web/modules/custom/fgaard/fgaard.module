@@ -62,17 +62,7 @@ function import_from_old_site() {
       continue;
     }
 
-    // Create file object from local URL.
-    $raw = str_replace('&#039;', "'", $photodata->field_photo_fid->raw);
-    $local_file = \Drupal::root() . '/' . str_replace('photos', 'photoz', $raw);
-    if(file_exists($local_file . '.crop_display.jpg')) {
-      $local_file .= '.crop_display.jpg';
-    }
-    $data = file_get_contents($local_file);
-    $new_file_name = str_replace('sites/default/files/photos/', '', str_replace("'", "", $raw));
-    $save_to_local_path = 'public://photos/' . $new_file_name;
-
-    $file = file_save_data($data, $save_to_local_path, FILE_EXISTS_REPLACE);
+    $file_id = process_photo($photodata->field_photo_fid->raw);
 
     //GET TERM ID
     $term_name = $photodata->tid->content;
@@ -91,7 +81,7 @@ function import_from_old_site() {
         ['target_id' => $tid[0]]
       ],
       'field_photo' => [
-        'target_id' => $file->id(),
+        'target_id' => $file_id,
         'alt' => $photodata->title->raw,
       ],
     ]);
@@ -106,6 +96,89 @@ function import_from_old_site() {
     }
   }
   echo 'Imported ' . $count . ' new photos and skipped ' . $skipped . ' photos.';
+}
+
+function import_from_old_blogs() {
+  //GET DATA FROM OLD SITE
+  $client = \Drupal::httpClient();
+  $request = $client->request('GET', 'http://frankgaard.com/blog-export', []);
+  $json_data = json_decode($request->getBody()->getContents());
+
+  $count =
+  $skipped = 0;
+  foreach($json_data as $photodata) {
+
+    //CHECK IF A NODE WITH THIS LEGACY ID EXISTS ALREADY
+    $query = \Drupal::entityQuery('node')
+      ->condition('type', 'blog')
+      ->condition('field_legacy_nid', $photodata->nid->raw);
+    $nids = $query->execute();
+    if(count($nids)) {
+      $skipped++;
+      continue;
+    }
+
+    $photos = [];
+    if(isset($photodata->field_photo_fid->content) && $images_content = (object)$photodata->field_photo_fid->content) {
+      foreach ($images_content as $image_content) {
+        $raw = str_replace('&#039;', "'", $image_content);
+        if (file_exists($raw)) {
+          //USE LOCAL FILE
+          $new_file_name = str_replace('sites/default/files/photos/', '', str_replace("'", "", $raw));
+          $uri = 'public://photos/' . $new_file_name;
+          if ($files = \Drupal::entityTypeManager()
+            ->getStorage('file')
+            ->loadByProperties(['uri' => $uri])) {
+            $file = array_shift($files);
+            $photos[] = ['target_id' => $file->id()];
+          }
+        }
+        else {
+          //IMPORT OLD FILE
+          if ($file_id = process_photo($raw)) {
+            $photos[] = ['target_id' => $file_id];
+          }
+        }
+      }
+    }
+
+    //Create node object with attached files.
+    $node = Node::create([
+      'type' => 'blog',
+      'title' => $photodata->title->raw,
+      'field_blog_body' => $photodata->body->raw,
+      'field_legacy_nid' => $photodata->nid->raw,
+      'field_images' => $photos,
+      'created' => $photodata->created->raw
+    ]);
+
+    $node->save();
+
+    echo 'imported ' . $photodata->title->raw . '<br />';
+
+    $count++;
+    if ($count > 100) {
+      break;
+    }
+
+  }
+  echo 'Imported ' . $count . ' new photos and skipped ' . $skipped . ' photos.';
+}
+
+function process_photo($photo) {
+  // Create file object from local URL.
+  $raw = str_replace('&#039;', "'", $photo);
+  $local_file = \Drupal::root() . '/' . str_replace('photos', 'photoz', $raw);
+  if(file_exists($local_file . '.crop_display.jpg')) {
+    $local_file .= '.crop_display.jpg';
+  }
+  $data = file_get_contents($local_file);
+  $new_file_name = str_replace('sites/default/files/photos/', '', str_replace("'", "", $raw));
+  $save_to_local_path = 'public://photos/' . $new_file_name;
+
+  $file = file_save_data($data, $save_to_local_path, FILE_EXISTS_REPLACE);
+
+  return $file->id();
 }
 
 /*
