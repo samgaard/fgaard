@@ -7,8 +7,8 @@ third_party_settings:
   menu_ui:
     available_menus: {  }
     parent: ''
-name: Blog
-type: blog
+name: Photo
+type: photo
 description: ''
 help: ''
 new_revision: false

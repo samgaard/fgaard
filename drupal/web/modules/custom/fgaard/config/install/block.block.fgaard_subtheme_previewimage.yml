@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - fgaard
+    - system
+  theme:
+    - fgaard_subtheme
+id: fgaard_subtheme_previewimage
+theme: fgaard_subtheme
+region: content
+weight: -2
+provider: null
+plugin: previewimage
+settings:
+  id: previewimage
+  label: Previewimage
+  provider: fgaard
+  label_display: visible
+visibility:
+  request_path:
+    id: request_path
+    pages: test
+    negate: false
+    context_mapping: {  }

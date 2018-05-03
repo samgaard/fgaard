@@ -3,12 +3,12 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
-    - node.type.blog
+    - node.type.photo
   module:
     - user
-id: node.blog.teaser
+id: node.photo.teaser
 targetEntityType: node
-bundle: blog
+bundle: photo
 mode: teaser
 content:
   links:
