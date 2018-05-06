@@ -18,7 +18,7 @@ function fgaard_help($route_name, RouteMatchInterface $route_match) {
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('FrankGaard.com Custom Code') . '</p>';
-      
+
       return $output;
 
     default:
@@ -41,12 +41,10 @@ function fgaard_theme() {
   ];
 }
 
-function import_from_old_site() {
+function import_photos() {
 
   //GET DATA FROM OLD SITE
-  $client = \Drupal::httpClient();
-  $request = $client->request('GET', 'http://frankgaard.com/data-export', []);
-  $json_data = json_decode($request->getBody()->getContents());
+  $json_data = json_decode(file_get_contents('photo-export.json'));
 
   $count =
   $skipped = 0;
@@ -71,7 +69,6 @@ function import_from_old_site() {
       ->loadByProperties(['name' => $term_name]);
     $tid = array_keys($term);
 
-
     // Create node object with attached file.
     $node = Node::create([
       'type' => 'photo',
@@ -84,6 +81,7 @@ function import_from_old_site() {
         'target_id' => $file_id,
         'alt' => $photodata->title->raw,
       ],
+      'created' => $photodata->created->raw
     ]);
 
     $node->save();
@@ -91,11 +89,12 @@ function import_from_old_site() {
     echo 'imported ' . $photodata->title->raw . '<br />';
 
     $count++;
-    if ($count > 300) {
+    if ($count > 1000) {
       break;
     }
   }
   echo 'Imported ' . $count . ' new photos and skipped ' . $skipped . ' photos.';
+
 }
 
 function import_from_old_blogs() {
