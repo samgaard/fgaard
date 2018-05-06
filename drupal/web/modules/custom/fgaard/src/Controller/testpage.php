@@ -19,7 +19,7 @@ class testpage extends ControllerBase {
     $output = '';
 
     import_from_old_blogs();
-    //import_from_old_site();
+    //import_photos();
     /*
 
     
