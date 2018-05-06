@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+name: banner_height
+label: 'Banner Height'
+effects:
+  56af1100-61f2-4d2d-8536-345b680c0cc3:
+    uuid: 56af1100-61f2-4d2d-8536-345b680c0cc3
+    id: image_scale
+    weight: 1
+    data:
+      width: null
+      height: 325
+      upscale: true
