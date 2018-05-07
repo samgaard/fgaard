@@ -7393,10 +7393,38 @@ p:last-child,
 }
 .owl-carousel .owl-item {
   width: auto !important;
+  max-width: 500px;
+  vertical-align: middle;
 }
-.modal-body img {
-  max-width: 100%;
-  height: auto;
+.modal {
+  text-align: center;
+}
+.modal .modal-dialog {
+  width: auto;
+  margin: 0 auto;
+  display: inline-block;
+}
+.modal .modal-dialog .modal-header {
+  padding: 5px 15px;
+  border-bottom: none;
+  text-align: left;
+}
+.modal .modal-dialog .modal-body {
+  padding: 0;
+}
+.modal .modal-dialog .modal-body img {
+  max-height: 100vh;
+  width: auto;
+  margin: 0 auto;
+}
+.view-blogs h3 {
+  margin-bottom: 0;
+}
+.view-blogs .views-field-created {
+  font-style: italic;
+  font-size: 12px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  margin-bottom: 3px;
 }
 @media (max-width: 767px) {
   #drupal-modal--content {

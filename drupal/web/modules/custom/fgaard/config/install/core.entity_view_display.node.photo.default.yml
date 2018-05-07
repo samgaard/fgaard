@@ -6,7 +6,7 @@ dependencies:
     - field.field.node.photo.field_gallery
     - field.field.node.photo.field_legacy_nid
     - field.field.node.photo.field_photo
-    - image.style.large
+    - image.style.max_1000x1000
     - node.type.photo
   module:
     - image
@@ -27,7 +27,7 @@ content:
     weight: 0
     label: visually_hidden
     settings:
-      image_style: large
+      image_style: max_1000x1000
       image_link: ''
     third_party_settings: {  }
     type: image

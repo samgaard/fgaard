@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+name: max_1000x1000
+label: 'Max 1000x1000'
+effects:
+  1490fc21-00e4-4cda-8733-df28e2b5ff2e:
+    uuid: 1490fc21-00e4-4cda-8733-df28e2b5ff2e
+    id: image_scale
+    weight: 1
+    data:
+      width: 1000
+      height: 1000
+      upscale: false
