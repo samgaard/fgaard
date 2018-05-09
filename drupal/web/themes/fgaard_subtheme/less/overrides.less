@@ -106,12 +106,40 @@ p:last-child,
     font-style: italic;
     font-size: 12px;
     font-family: Georgia, "Times New Roman", Times, serif;
-    margin-bottom: 3px;
+    float: right;
   }
 }
 
 @media (max-width: @screen-xs-max) {
   #drupal-modal--content {
     max-width: 100%;
+    height: auto;
   }
+}
+
+#block-views-block-photos-block-1 {
+  margin-bottom: 30px;
+}
+
+.views-field-field-photo {
+  position: relative;
+  .use-ajax {
+    .ajax-throbber {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-size: 20px;
+      color: hotpink;
+      background: #000;
+      border-radius: 100%;
+      padding: 5px;
+      margin-top: -10px;
+      margin-left: -10px;
+    }
+  }
+}
+
+//HIGHER THAN TOOLTIP
+.modal {
+  z-index: 1071;
 }

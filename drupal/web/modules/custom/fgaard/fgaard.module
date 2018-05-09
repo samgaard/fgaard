@@ -84,6 +84,8 @@ function import_photos() {
       'created' => $photodata->created->raw
     ]);
 
+    $node->setOwnerId(1);
+
     $node->save();
 
     echo 'imported ' . $photodata->title->raw . '<br />';
@@ -99,9 +101,7 @@ function import_photos() {
 
 function import_from_old_blogs() {
   //GET DATA FROM OLD SITE
-  $client = \Drupal::httpClient();
-  $request = $client->request('GET', 'http://frankgaard.com/blog-export', []);
-  $json_data = json_decode($request->getBody()->getContents());
+  $json_data = json_decode(file_get_contents('blog-export.json'));
 
   $count =
   $skipped = 0;
@@ -145,18 +145,20 @@ function import_from_old_blogs() {
     $node = Node::create([
       'type' => 'blog',
       'title' => $photodata->title->raw,
-      'field_blog_body' => $photodata->body->raw,
+      'field_blog_body' => ['value' => $photodata->body->raw, 'format' => 'full_html'],
       'field_legacy_nid' => $photodata->nid->raw,
       'field_images' => $photos,
       'created' => $photodata->created->raw
     ]);
+
+    $node->setOwnerId(1);
 
     $node->save();
 
     echo 'imported ' . $photodata->title->raw . '<br />';
 
     $count++;
-    if ($count > 100) {
+    if ($count > 1000) {
       break;
     }
 
