@@ -3,6 +3,10 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.photo.field_description
+    - field.field.node.photo.field_gallery
+    - field.field.node.photo.field_legacy_nid
+    - field.field.node.photo.field_photo
     - node.type.photo
   module:
     - user
@@ -10,8 +14,10 @@ id: node.photo.teaser
 targetEntityType: node
 bundle: photo
 mode: teaser
-content:
-  links:
-    weight: 100
-    region: content
-hidden: {  }
+content: {  }
+hidden:
+  field_description: true
+  field_gallery: true
+  field_legacy_nid: true
+  field_photo: true
+  links: true

@@ -7,6 +7,7 @@ dependencies:
   - better_exposed_filters
   - block
   - block_content
+  - datetime
   - fgaard
   - field
   - file
@@ -23,3 +24,5 @@ dependencies:
   - text
   - user
   - views
+  - views_bootstrap
+  - views_infinite_scroll

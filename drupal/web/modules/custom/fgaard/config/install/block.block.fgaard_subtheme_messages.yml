@@ -8,7 +8,7 @@ dependencies:
 id: fgaard_subtheme_messages
 theme: fgaard_subtheme
 region: highlighted
-weight: 0
+weight: -7
 provider: null
 plugin: system_messages_block
 settings:
