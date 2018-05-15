@@ -15,7 +15,6 @@ dependencies:
   - file
   - help
   - image
-  - image_popup
   - libraries
   - menu_ui
   - node
