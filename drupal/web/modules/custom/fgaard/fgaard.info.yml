@@ -7,6 +7,8 @@ dependencies:
   - better_exposed_filters
   - block
   - block_content
+  - captcha
+  - contact
   - datetime
   - fgaard
   - field
@@ -14,10 +16,14 @@ dependencies:
   - help
   - image
   - image_popup
+  - libraries
   - menu_ui
   - node
   - owlcarousel
   - path
+  - pathauto
+  - recaptcha
+  - responsive_image
   - search
   - system
   - taxonomy

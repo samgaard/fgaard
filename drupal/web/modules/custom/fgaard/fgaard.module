@@ -217,3 +217,11 @@ function top_five_colors($file) {
   return $output;
 }
 */
+
+function fgaard_preprocess_field(&$variables) {
+  if (($variables['element']['#field_name'] == 'field_images')) {
+    //$variables['element'][0]['#item_attributes']['class'] = ['use-ajax'];
+    //$variables['element'][0]['#item_attributes']['data-dialog-type'] = 'modal';
+    /*data-toggle="tooltip" data-placement="top" title="" href="/node/3261" data-dialog-type="modal" class="use-ajax" data-original-title="Temporary Composition (painting)"*/
+  }
+}

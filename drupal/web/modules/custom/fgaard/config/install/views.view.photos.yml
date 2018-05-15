@@ -4,7 +4,7 @@ dependencies:
   config:
     - field.storage.node.field_photo
     - image.style.banner_height
-    - image.style.medium
+    - image.style.max_650x650
     - node.type.photo
     - taxonomy.vocabulary.gallery
   content:
@@ -446,10 +446,10 @@ display:
           row_class: ''
           default_row_class: true
           alignment: horizontal
-          columns: '6'
+          columns: '999'
           col_xs: col-xs-12
           col_sm: col-sm-4
-          col_md: col-md-2
+          col_md: col-md-3
           col_lg: col-lg-2
       defaults:
         style: false
@@ -501,7 +501,7 @@ display:
           exposed: true
           expose:
             operator_id: field_gallery_target_id_op
-            label: Gallery
+            label: ''
             description: ''
             use_operator: false
             operator: field_gallery_target_id_op
@@ -546,25 +546,13 @@ display:
           group_type: group
           admin_label: ''
           order: DESC
-          exposed: true
+          exposed: false
           expose:
             label: 'Post Date'
           granularity: second
           entity_type: node
           entity_field: created
           plugin_id: date
-        random:
-          id: random
-          table: views
-          field: random
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: ASC
-          exposed: true
-          expose:
-            label: Random
-          plugin_id: random
       pager:
         type: infinite_scroll
         options:
@@ -769,7 +757,7 @@ display:
           click_sort_column: target_id
           type: image
           settings:
-            image_style: medium
+            image_style: max_650x650
             image_link: ''
           group_column: ''
           group_columns: {  }
@@ -783,13 +771,12 @@ display:
           field_api_classes: false
           plugin_id: field
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - url.query_args
-        - 'url.query_args:sort_by'
         - user
         - 'user.node_grants:view'
         - user.permissions
