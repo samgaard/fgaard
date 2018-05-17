@@ -150,19 +150,21 @@ p:last-child,
       .views-field-field-photo {
         margin-bottom: 30px;
         a {
-          min-height: 240px;
+          height: 240px;
           display: block;
           @media(max-width: @screen-md-max) {
-            min-height: 310px;
+            height: 310px;
           }
           @media(max-width: @screen-sm-max) {
-            min-height: 320px;
+            height: 320px;
           }
           @media(max-width: @screen-xs-max) {
-            min-height: inherit;
+            height: inherit;
           }
           img {
             margin: auto;
+            max-height: 100%;
+            width: auto;
           }
         }
       }
