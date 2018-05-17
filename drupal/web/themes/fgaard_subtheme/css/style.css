@@ -7501,4 +7501,16 @@ p:last-child,
     opacity: 0.5;
   }
 }
+#block-tools ul {
+  float: left;
+}
+#block-tools ul li {
+  float: left;
+}
+#block-tools ul li a {
+  color: #777777;
+  line-height: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
 /*# sourceMappingURL=style.css.map */
