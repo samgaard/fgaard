@@ -1,1 +1,26 @@
+excluded:
+  - block.block.fgaard_account_menu
+  - block.block.fgaard_branding
+  - block.block.fgaard_breadcrumbs
+  - block.block.fgaard_content
+  - block.block.fgaard_footer
+  - block.block.fgaard_help
+  - block.block.fgaard_local_actions
+  - block.block.fgaard_local_tasks
+  - block.block.fgaard_main_menu
+  - block.block.fgaard_messages
+  - block.block.fgaard_previewimage
+  - block.block.fgaard_search
+  - block.block.fgaard_subtheme_account_menu
+  - block.block.fgaard_subtheme_branding
+  - block.block.fgaard_subtheme_content
+  - block.block.fgaard_subtheme_footer
+  - block.block.fgaard_subtheme_help
+  - block.block.fgaard_subtheme_local_actions
+  - block.block.fgaard_subtheme_local_tasks
+  - block.block.fgaard_subtheme_main_menu
+  - block.block.fgaard_subtheme_messages
+  - block.block.fgaard_testblock
+  - block.block.fgaard_tools
+  - image.style.max_650x650
 required: true
