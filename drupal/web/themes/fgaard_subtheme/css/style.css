@@ -7513,4 +7513,12 @@ p:last-child,
   padding-top: 15px;
   padding-bottom: 15px;
 }
+.feed-icon {
+  background: url(/core/misc/feed.svg) no-repeat;
+  overflow: hidden;
+  text-indent: -9999px;
+  display: block;
+  width: 16px;
+  height: 16px;
+}
 /*# sourceMappingURL=style.css.map */
